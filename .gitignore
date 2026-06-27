@@ -8,4 +8,6 @@ backend/uploads/*
 backend/db.sqlite3
 *.db
 .vite/
-mobile/
+mobile/node_modules/
+mobile/.expo/
+mobile/dist/
