@@ -2,7 +2,7 @@ import axios from 'axios'
 import config from './config'
 
 const api = axios.create({
-  baseURL: config.API_BASE ? `${config.API_BASE}/api` : '/api',
+  baseURL: config.API_BASE ? `${config.API_BASE}/api` : 'https://dumpbox-b.kunal.dpdns.org//api',
 })
 
 api.interceptors.request.use((config) => {

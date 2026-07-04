@@ -1,4 +1,5 @@
-from flask import Flask, request
+import os
+from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from config import Config
@@ -7,20 +8,13 @@ from routes.auth import auth_bp
 from routes.folders import folders_bp
 from routes.files import files_bp
 from routes.shares import shares_bp
-import os
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder=None)
     app.config.from_object(Config)
 
-    CORS(
-        app,
-        resources={r"/api/*": {"origins": "*"}},
-        supports_credentials=True,
-        allow_headers=["Content-Type", "Authorization", "X-Requested-With"],
-        expose_headers=["Content-Disposition"],
-    )
+    CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
     @app.after_request
     def add_pna_headers(response):
@@ -46,9 +40,27 @@ def create_app():
     with app.app_context():
         db.create_all()
 
+    frontend_dist = os.path.abspath(Config.FRONTEND_DIST)
+    if os.path.isdir(frontend_dist):
+        @app.route("/", defaults={"path": ""})
+        @app.route("/<path:path>")
+        def serve_frontend(path):
+            if path and os.path.isfile(os.path.join(frontend_dist, path)):
+                return send_from_directory(frontend_dist, path)
+            return send_from_directory(frontend_dist, "index.html")
+
     return app
 
 
 if __name__ == "__main__":
+    import sys
+
     app = create_app()
-    app.run(debug=True, port=5000, host="0.0.0.0")
+    mode = sys.argv[1] if len(sys.argv) > 1 else "dev"
+
+    if mode == "prod":
+        from waitress import serve
+        print("Starting production server on http://0.0.0.0:5000")
+        serve(app, host="0.0.0.0", port=5000)
+    else:
+        app.run(debug=True, port=5000, host="0.0.0.0")

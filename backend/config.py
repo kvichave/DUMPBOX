@@ -16,3 +16,4 @@ class Config:
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=7)
     UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
     MAX_CONTENT_LENGTH = 100 * 1024 * 1024
+    FRONTEND_DIST = os.path.join(BASE_DIR, "..", "frontend", "dist")

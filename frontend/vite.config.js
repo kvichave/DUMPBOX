@@ -4,7 +4,11 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 3000,
+    port: 3003,
+    allowedHosts: [
+      'dumpbox.kunal.dpdns.org',
+      '.dpdns.org',
+    ],
     proxy: {
       '/api': {
         target: 'http://localhost:5000',
