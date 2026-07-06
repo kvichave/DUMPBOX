@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { Link, Copy, Check, X, ExternalLink } from 'lucide-react'
 import api from '../api'
+import API_BASE from '../config'
 
 export default function ShareDialog({ file, onClose }) {
   const [url, setUrl] = useState('')
@@ -17,7 +18,7 @@ export default function ShareDialog({ file, onClose }) {
     setLoading(true)
     try {
       const { data } = await api.post('/shares', { file_id: file.id })
-      const fullUrl = `${window.location.origin}/api/shares/${data.token}`
+      const fullUrl = `${API_BASE}/api/shares/${data.token}`
       setUrl(fullUrl)
     } catch {
       setUrl('Failed to generate link')

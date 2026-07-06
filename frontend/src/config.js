@@ -1,5 +1,3 @@
-const config = {
-  API_BASE: (import.meta.env.VITE_API_BASE || '').replace(/\/+$/, ''),
-}
+const API_BASE = 'https://dumpbox-b.kunal.dpdns.org'
 
-export default config
+export default API_BASE

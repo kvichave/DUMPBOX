@@ -1,5 +1,5 @@
 const config = {
-  API_BASE: 'http://localhost:5000',
+  API_BASE: 'https://dumpbox-b.kunal.dpdns.org',
 }
 
 export default config

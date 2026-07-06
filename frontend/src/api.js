@@ -1,8 +1,8 @@
 import axios from 'axios'
-import config from './config'
+import API_BASE from './config'
 
 const api = axios.create({
-  baseURL: config.API_BASE ? `${config.API_BASE}/api` : 'https://dumpbox-b.kunal.dpdns.org//api',
+  baseURL: `${API_BASE}/api`,
 })
 
 api.interceptors.request.use((config) => {
