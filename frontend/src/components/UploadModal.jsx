@@ -129,7 +129,7 @@ export default function UploadModal({ folderId, onClose, onUploadComplete }) {
             <p className="text-sm font-semibold text-slate-700">
               {dragOver ? 'Drop files here' : 'Drag & drop files here'}
             </p>
-            <p className="text-xs text-slate-400 mt-1">or click to browse (up to 100MB each)</p>
+            <p className="text-xs text-slate-400 mt-1">or click to browse (no size limit)</p>
             <input ref={inputRef} type="file" multiple onChange={(e) => addFiles(e.target.files)} className="hidden" />
           </div>
 
